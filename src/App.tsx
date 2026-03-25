@@ -26,6 +26,7 @@ const moods = [
 
 export default function App() {
   const [name, setName] = useState('');
+  const [storyElements, setStoryElements] = useState('');
   const [theme, setTheme] = useState(themes[0]);
   const [customThemePrompt, setCustomThemePrompt] = useState('');
   const [mood, setMood] = useState(moods[0]);
@@ -58,6 +59,8 @@ export default function App() {
         return;
       }
 
+      const elementsPrompt = storyElements.trim() ? `故事中必須包含以下元素：${storyElements}。` : '';
+
       let promptSuffix = '';
       if (mood.id === 'absurd') {
         promptSuffix = `這是一個「無厘頭」版本。故事要極度荒誕、不按牌理出牌、充滿冷笑話或超現實情節（例如：突然出現一隻會跳芭蕾的章魚，或者月亮變成了一塊巨大的起司）。風格要幽默、無厘頭，但最後要強行轉折回溫馨的晚安祝福，讓 ${name} 在困惑中感到一絲甜蜜。`;
@@ -69,6 +72,7 @@ export default function App() {
         女主角的名字是：${name}。
         場景：${scenePrompt}。
         語氣：${mood.name}。
+        ${elementsPrompt}
         ${promptSuffix}
         要求：
         1. 故事要短小精悍，大約 300-500 字。
@@ -187,6 +191,20 @@ export default function App() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="例如：小寶貝、親愛的..."
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all placeholder:text-white/20"
+              />
+            </div>
+
+            {/* Story Elements Input */}
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-widest text-white/40 mb-2 ml-1">
+                想加入的元素 (選填)
+              </label>
+              <input 
+                type="text"
+                value={storyElements}
+                onChange={(e) => setStoryElements(e.target.value)}
+                placeholder="例如：一隻小貓、草莓蛋糕、下雨天..."
                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all placeholder:text-white/20"
               />
             </div>
